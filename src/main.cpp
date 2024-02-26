@@ -1,6 +1,5 @@
 #include "utils.hpp"
 
-Modes current_mode = WebMode;
 bool startup = false;
 float bat_perc = 0.0;
 bool buzz_req = false;
@@ -45,7 +44,7 @@ void loop() {
   handle_imu();
   display();
   audio();
-  attachInterrupt(M5_BUTTON_HOME, on_home_press, FALLING);
+  attachInterrupt(M5_BUTTON_HOME, on_home_press, CHANGE);
 }
 
 void handle_battery() {

@@ -14,14 +14,14 @@ struct wifi_router {
   char password[30];
 };
 
-enum Modes { WebMode, BatteryMode, IMUMode, EnumLength };
+enum Modes { WebMode, BatteryMode, IMUMode, LogoMode, EnumLength };
 
 constexpr uint16_t BACKGROUND = TFT_BLACK;
 constexpr uint32_t WIDTH = 135;
 constexpr uint32_t HEIGHT = 240;
 constexpr size_t ROUTERS = 3;
 
-extern Modes current_mode;
+extern volatile Modes current_mode;
 extern bool startup;
 extern float bat_perc;
 extern bool buzz_req;
@@ -29,11 +29,14 @@ extern uint32_t pitch;
 
 namespace Web {
 extern uint32_t total_visits;
+extern char message[100];
 extern bool wifi_connected;
 extern bool server_created;
 extern char currentSSID[20];
 extern char currentIP[20];
 extern char hostname[20];
+
+extern char discord_hook_url[200];
 extern WiFiMulti wifi_multi;
 extern WebServer server;
 extern wifi_router routers[ROUTERS];
@@ -50,6 +53,7 @@ void display();
 void handle_wifi();
 void create_server();
 void handle_imu();
+void send_hook(const char name[], const char content[]);
 
 // inline functions (macros)
 inline void clear() { M5.Lcd.fillScreen(BACKGROUND); }

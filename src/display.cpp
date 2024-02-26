@@ -3,6 +3,10 @@
 constexpr uint32_t DMODE_SWITCH_FREQ = 523;
 constexpr uint32_t DWEB_CHANGED_FREQ = 800;
 
+volatile Modes current_mode = WebMode;
+
+char Web::message[100] = "\0";
+
 void display() {
 
   static Modes dmode = EnumLength;
@@ -42,17 +46,19 @@ void display() {
   if (dmode != current_mode) {
     send_buzzer(DMODE_SWITCH_FREQ);
     mode_changed = true;
+    detachInterrupt(M5_BUTTON_RST);
   }
 
   M5.Lcd.setCursor(0, 40);
   if (current_mode == WebMode) {
     if (ma_web_total_visits != Web::total_visits || mode_changed) {
-      if (ma_web_total_visits != Web::total_visits) {
-        send_buzzer(DWEB_CHANGED_FREQ);
-      }
       M5.Lcd.fillRect(0, 40, WIDTH, HEIGHT - 40, BACKGROUND);
       M5.Lcd.setTextSize(2);
-      M5.Lcd.printf("VIS=%u", Web::total_visits);
+      M5.Lcd.printf("VIS=%u\r\n", Web::total_visits);
+      if (ma_web_total_visits != Web::total_visits) {
+        send_buzzer(DWEB_CHANGED_FREQ);
+        M5.Lcd.printf("%s", Web::message);
+      }
     }
   } else if (current_mode == BatteryMode) {
     if (dbat_perc != bat_perc || mode_changed) {
@@ -73,6 +79,13 @@ void display() {
       M5.Lcd.printf("PITC=%.2f\r\nROLL=%.2f\r\nYAW=%.2f\r\n", IMUData::pitch,
                     IMUData::roll, IMUData::yaw);
       M5.Lcd.printf("TEMP=%.2f C", IMUData::temp);
+    }
+  } else if (current_mode == LogoMode) {
+    if (mode_changed) {
+      M5.Lcd.fillRect(0, 40, WIDTH, HEIGHT - 40, BACKGROUND);
+      M5.Lcd.setTextSize(2);
+      M5.Lcd.printf("ESP ROCK\r\nVER=0.0.1\r\n");
+      M5.Lcd.printf("WE ROCK\r\nTHE NET!!\r\n^_^\r\nUwU\r\nOwO");
     }
   }
   M5.Lcd.setTextSize(1);
