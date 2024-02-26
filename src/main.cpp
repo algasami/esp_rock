@@ -66,6 +66,7 @@ void audio() {
   static uint32_t buzzer_start = 0;
   if (buzz_req) {
     buzzer_start = millis();
+    M5.Beep.setVolume(100);
     M5.Beep.tone(pitch);
     buzz_req = false;
   }

@@ -70,8 +70,9 @@ void display() {
                     IMUData::gyro_y, IMUData::gyro_z);
       M5.Lcd.printf("ACCE=(%.2f,%.2f,%.2f)\r\n", IMUData::acc_x, IMUData::acc_y,
                     IMUData::acc_z);
-      M5.Lcd.printf("PITCH=%.2f\r\nROLL=%.2f\r\nYAW=%.2f\r\n", IMUData::pitch,
+      M5.Lcd.printf("PITC=%.2f\r\nROLL=%.2f\r\nYAW=%.2f\r\n", IMUData::pitch,
                     IMUData::roll, IMUData::yaw);
+      M5.Lcd.printf("TEMP=%.2f C", IMUData::temp);
     }
   }
   M5.Lcd.setTextSize(1);

@@ -19,7 +19,7 @@ enum Modes { WebMode, BatteryMode, IMUMode, EnumLength };
 constexpr uint16_t BACKGROUND = TFT_BLACK;
 constexpr uint32_t WIDTH = 135;
 constexpr uint32_t HEIGHT = 240;
-constexpr size_t ROUTERS = 2;
+constexpr size_t ROUTERS = 3;
 
 extern Modes current_mode;
 extern bool startup;
