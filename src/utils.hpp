@@ -10,8 +10,8 @@
 #include <stddef.h>
 
 struct wifi_router {
-  char ssid[20];
-  char password[30];
+    char ssid[20];
+    char password[30];
 };
 
 enum Modes { WebMode, BatteryMode, IMUMode, LogoMode, EnumLength };
@@ -58,7 +58,7 @@ void send_hook(const char name[], const char content[]);
 // inline functions (macros)
 inline void clear() { M5.Lcd.fillScreen(BACKGROUND); }
 inline void send_buzzer(uint32_t _pitch) {
-  pitch = _pitch;
-  buzz_req = true;
+    pitch = _pitch;
+    buzz_req = true;
 }
 #endif
